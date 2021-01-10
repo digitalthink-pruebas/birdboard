@@ -128,3 +128,31 @@ Refactorizar: Crear controlador para proyectos
 
 		git add .
 		git commit -m "Crear primeros test"
+
+## Lección 3 de 44: Validando peticiones
+----------------------------------------
+    Cuando se intente dar de alta un proyecto sin título, se deben tener errores, que serán almacenados en sesión y serán
+    verificables a través de assertSessionHasErrors
+
+    Pueden filtrase los test a ejecutar con --fileter
+        Ej: vendor/bin/phpunit --filter a_project_requires_a_title
+
+    Podemos definir un alias para facilitar la ejecución de comandos
+        alias pf="vendor/bin/phpunit --filter"
+
+    Hacer lo mismo para el campo description
+
+    Crear model factory 
+        php artisan make:factory ProjectFactory --model="App\Project"
+
+    Poblar mediante tinker
+        php artisan tinker
+            Podemos crear elementos mediante 2 comandos
+                factory('App\Project')->create() // Persiste en la base de datos
+                factory('App\Project')->make() // No persiste en la base de datos y devuelve el resultado como un objeto
+                factory('App\Project')->raw() // No persiste en la base de datos y devuelve el resultado como un array
+
+    	Añadir a Git
+
+            git add .
+            git commit -m "Validando peticiones"
