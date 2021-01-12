@@ -157,10 +157,33 @@ Refactorizar: Crear controlador para proyectos
             git add .
             git commit -m "Validando peticiones"
 
-## Lección 3 de 44: Test sobre modelos
+## Lección 4 de 44: Test sobre modelos
 --------------------------------------
 Cuando un usuario crea un proyecto puede visualizar el título y la descripción
 
 Creado método a_user_can_view_a_project
 
-Crear 
+Crear método show en ProjectsController
+
+    public function show()
+    {
+        $project = Project::findOrFail(request('project')); // si el proyecto a visualizar no existe se lanza una excepción
+
+        return view('projects.index', compact('projects'));
+    }
+
+Creado archivo resources\views\projecs\show.blade.php
+
+Creado test unitario para probar rutas
+
+    php artisan make:test ProjectTest --unit
+
+Crear 5 proyectos de prueba a través de tinker
+
+    factory('App\Project', 5)->create();
+
+Añadir a Git
+
+    git add .
+    git commit -m "Lección 4 de 44: Test sobre modelos"
+    git push origin main
