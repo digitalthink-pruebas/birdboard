@@ -156,3 +156,11 @@ Refactorizar: Crear controlador para proyectos
 
             git add .
             git commit -m "Validando peticiones"
+
+## Lección 3 de 44: Test sobre modelos
+--------------------------------------
+Cuando un usuario crea un proyecto puede visualizar el título y la descripción
+
+Creado método a_user_can_view_a_project
+
+Crear 
