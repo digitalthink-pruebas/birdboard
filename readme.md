@@ -210,3 +210,36 @@ Añadir a Git
     git commit -m "Lección 5 de 44: Un proyecto debe tener un propietario"
     git push origin main
 
+## Lección 6 de 44: Ámbito de visibilidad
+-----------------------------------------
+Un proyecto solo se puede visualizar por su creador.
+
+Poner middleware en ruta para estar logado y ver los proyectos que me pertenecen
+
+    Route::get('/projects', 'ProjectsController@index')->middleware('auth');
+
+Crear proyecto para el usuario que he creado (tinker)
+
+    App\Project::forceCreate(['title' => 'My project', 'description' => 'Lorem ipsum', 'owner_id' => 12]);
+
+    El owner_id se saca de la tabla users
+
+Agrupar todos los middleware en uno
+
+    Route::get('/projects', 'ProjectsController@index')->middleware('auth');
+    Route::get('/projects/{project}', 'ProjectsController@show')->middleware('auth');
+    Route::post('/projects', 'ProjectsController@store')->middleware('auth');
+
+    Pasa a ser 
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/projects', 'ProjectsController@index');
+        Route::get('/projects/{project}', 'ProjectsController@show');
+        Route::post('/projects', 'ProjectsController@store');
+    });
+
+Añadir a Git
+
+    git add .
+    git commit -m "Lección 6 de 44: Ámbito de visibilidad"
+    git push origin main
