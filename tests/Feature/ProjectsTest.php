@@ -15,6 +15,8 @@ class ProjectsTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
@@ -35,6 +37,8 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_project_requires_a_title()
     {
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = factory('App\Project')->raw(['title' => '']);
 
         // Cuando se insserta un proyecto, este debe contener un título
@@ -45,6 +49,8 @@ class ProjectsTest extends TestCase
     /** @test  */
     public function a_project_requires_a_description()
     {
+        $this->actingAs(factory('App\User')->create());
+
         $attributes = factory('App\Project')->raw(['description' => '']);
 
         // Cuando se insserta un proyecto, este debe contener un título
@@ -53,11 +59,53 @@ class ProjectsTest extends TestCase
     }
 
     /** @test  */
-    public function a_user_can_view_a_project()
+    public function guest_cannot_create_projects()
+    {
+        //$this->withoutExceptionHandling();
+
+        //$attributes = factory('App\Project')->raw(['owner_id' => null]);
+        // Cuando se insserta un proyecto, este debetener un propietario
+        //$this->post('/projects', $attributes)
+        //    ->assertSessionHasErrors('owner_id');
+
+        $attributes = factory('App\Project')->raw();
+
+        // Si el usuario no está autenticado debe ser redirigido a la página de login
+        $this->post('/projects', $attributes)
+            ->assertRedirect('login');
+
+    }
+
+    /** @test  */
+    public function guest_cannot_view_projects()
+    {
+        //$this->withoutExceptionHandling();
+
+        // Si el usuario no está autenticado debe ser redirigido a la página de login
+        $this->get('/projects')
+            ->assertRedirect('login');
+    }
+
+    /** @test  */
+    public function guest_cannot_view_a_single_project()
+    {
+        //$this->withoutExceptionHandling();
+
+        $project = factory('App\Project')->create();
+
+        // Si el usuario no está autenticado debe ser redirigido a la página de login
+        $this->get($project->path())
+            ->assertRedirect('login');
+    }
+
+    /** @test  */
+    public function a_user_can_view_a_their_project()
     {
         $this->withoutExceptionHandling();
 
-        $project = factory('App\Project')->create();
+        $this->be(factory('App\User')->create());
+
+        $project = factory('App\Project')->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
             ->assertSee($project->title)

@@ -9,13 +9,22 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
+        //$projects = Project::all();
+
+        $projects = auth()->user()->projects;
 
         return view('projects.index', compact('projects'));
     }
 
     public function show(Project $project)
     {
+        /*
+        if (auth()->id() !== $project->owner_id)
+        {
+            abort(403);
+        }
+        */
+
         return view('projects.show', compact('project'));
     }
 
@@ -24,11 +33,16 @@ class ProjectsController extends Controller
         // Validar
         $attributes = request()->validate([
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ]);
 
+        // El id del usuario es el del usuario autenticado
+        //$attributes['owner_id'] = auth()->id();
+
         // Persistir
-        Project::create($attributes);
+        auth()->user()->projects()->create($attributes);
+
+        //Project::create($attributes);
 
         // Redireccionar
         return redirect('/projects');

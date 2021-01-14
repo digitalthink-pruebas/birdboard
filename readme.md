@@ -187,3 +187,26 @@ Añadir a Git
     git add .
     git commit -m "Lección 4 de 44: Test sobre modelos"
     git push origin main
+
+## Lección 5 de 44: Un proyecto debe tener un propietario
+---------------------------------------------------------
+Creada función public function a_project_requires_an_owner() en ProjectsTest.php
+
+Crear dato owner_id en la tabla
+
+Ejecutar migración
+
+    php artisan migrate:refresh
+
+Ejecutar php artisan make:auth
+
+Crear test unitario UserTest
+
+    php artisan make:test UserTest --unit
+
+Añadir a Git
+
+    git add .
+    git commit -m "Lección 5 de 44: Un proyecto debe tener un propietario"
+    git push origin main
+
