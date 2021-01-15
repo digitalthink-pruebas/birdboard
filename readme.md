@@ -243,3 +243,17 @@ Añadir a Git
     git add .
     git commit -m "Lección 6 de 44: Ámbito de visibilidad"
     git push origin main
+
+## Lección 6 de 44: Vista para crear proyectos
+----------------------------------------------
+Renombrado ProjectsTest a ManageProjectsTest
+
+Agrupados los test que controlan el acceso de un usuario no logado en el método
+
+    guest_cannot_manage_projects()
+
+Añadir a Git
+
+    git add .
+    git commit -m "Lección 7 de 44: Vista para crar proyectos"
+    git push origin main
